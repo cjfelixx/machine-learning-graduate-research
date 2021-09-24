@@ -1,0 +1,9 @@
+name: scel
+channels:
+  - defaults
+dependencies:
+  - numpy
+  - matplotlib
+  - scikit-learn
+  - pandas
+  - jupyterlab
