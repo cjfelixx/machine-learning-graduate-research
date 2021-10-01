@@ -1,4 +1,7 @@
 .DS_Store
+Super\ Secret\ Papers/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
