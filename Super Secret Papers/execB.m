@@ -52,8 +52,8 @@ for i=1:Nexp,
     p=1;
     eta=0.01;
     epsilon=9e-4;
-    [e_knlms,nb]=kapa(v,d,p,eta,epsilon,seuil,'laplace',p1);
-    mse_knlms=mse_knlms+(dref-d+e_knlms).^2/Nexp;
+    % [e_knlms,nb]=kapa(v,d,p,eta,epsilon,seuil,'laplace',p1);
+    % mse_knlms=mse_knlms+(dref-d+e_knlms).^2/Nexp;
     
     % KAPA algorithm (with p=2)
     seuil=0.3;
