@@ -28,4 +28,6 @@ def KNLMS(d,d_true,kernel,step_size,reg_coeff,threshold):
         mse_KNLMS = np.append(mse_KNLMS, (d_true[n]-d_n + (d_n - h.T @ alpha).item())**2)
 
     mse_KNLMS_smooth = np.convolve(mse_KNLMS,np.ones(20),'valid') / 20
-    plt.semilogy(range(len(mse_KNLMS_smooth)),mse_KNLMS_smooth)
+    print('number of SVs',len(dictionary))
+    return mse_KNLMS_smooth
+#     plt.semilogy(range(len(mse_KNLMS_smooth)),mse_KNLMS_smooth)
