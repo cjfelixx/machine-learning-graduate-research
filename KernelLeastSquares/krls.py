@@ -10,7 +10,6 @@ def KRLS(d,d_true,kernel,threshold):
        easy to evaluate.
        For this demonstration, we will be utilizing the guassian kernel function
     '''
-    mse_KRLS = np.array([])
     err = np.array([])
 
     # Initalization
@@ -24,7 +23,7 @@ def KRLS(d,d_true,kernel,threshold):
 #     alpha = np.matrix(d[0]/k)
     alpha = np.matrix(0)
     m = 1
-
+    err = np.append(err,d[0] - h.T @ alpha)
     for n in range(1, len(d)):
         u_n = np.matrix([d[n-1],d[n]])
         d_n = np.matrix(d[n])
@@ -57,9 +56,5 @@ def KRLS(d,d_true,kernel,threshold):
 
             alpha = alpha + K_inv @ q_t * err[-1]
 
-        mse_KRLS = np.append(mse_KRLS, (d_true[n]-d_n + err[-1].item())**2)
-#     print('number of SVs', len(dictionary))
-    mse_KRLS_smooth = np.convolve(mse_KRLS,np.ones(20),'valid') / 20
-    print('number of SVs',len(dictionary))
-    return mse_KRLS_smooth
-#     plt.semilogy(range(len(mse_KRLS_smooth)),mse_KRLS_smooth)
+#     print('number of SVs',len(dictionary))
+    return err
