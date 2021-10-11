@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def KRLS(d,d_true,kernel,threshold):
+def KRLS(d,kernel,threshold):
     '''
        Kernel Recursive Least Sqaures depends on a kernel function in which to evaluate the points in a
        higher dimension without needing to create and analyaze in the higher dimensional plane as this would

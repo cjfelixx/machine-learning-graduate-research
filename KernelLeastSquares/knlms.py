@@ -1,15 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def KNLMS(d,d_true,kernel,step_size,reg_coeff,threshold):
+def KNLMS(d,kernel,step_size,reg_coeff,threshold):
     
     err = np.array([])
     
     # Initialization
     m = 1
-    u = np.matrix([d[0],d[1]])
+    u = np.array([d[0],d[1]])
     dictionary = np.matrix(u)
-
     h = np.matrix(kernel(u,dictionary))
     alpha = np.matrix(0)
     
