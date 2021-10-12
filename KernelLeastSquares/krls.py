@@ -13,25 +13,24 @@ def KRLS(d,kernel,threshold):
     err = np.array([])
 
     # Initalization
-    u = np.matrix([d[0],d[1]])
-    dictionary = np.matrix(u)
-    h = np.matrix(kernel(u,dictionary))
-    k = np.matrix(kernel(u,u))
+    m = 1
+    u = np.array([d[0],d[1]])
+    dictionary = np.array(u).reshape(1,2)
+    h = np.array(kernel(u,dictionary)).reshape(1,1)
+    k = kernel(u,u)
     K_inv = np.matrix(1/k)
 
     P = np.matrix(1)
-#     alpha = np.matrix(d[0]/k)
-    alpha = np.matrix(0)
-    m = 1
+#     alpha = np.array(d[0]/k).reshape(1,1)
+    alpha = np.matrix(0).reshape(1,1)
+    
     err = np.append(err,d[0] - h.T @ alpha)
     for n in range(1, len(d)):
-        u_n = np.matrix([d[n-1],d[n]])
-        d_n = np.matrix(d[n])
-        k = np.matrix(kernel(u_n,u_n))
-        h = np.matrix([kernel(u_n,dictionary[j]) for j in range(len(dictionary))]).T
-    #     print('k_inv',K_inv)
-    #     print('h',h)
-        a = np.matrix(K_inv @ h)
+        u_n = np.array([d[n-1],d[n]]).reshape(1,2)
+        d_n = d[n]
+        k = kernel(u_n,u_n)
+        h = np.array([kernel(u_n,dictionary[j]) for j in range(len(dictionary))]).T.reshape(m,1)
+        a = K_inv @ h
         delta = (k - h.T @ a).item()
         err = np.append(err,d_n - h.T @ alpha)
         if delta > threshold:
@@ -46,7 +45,7 @@ def KRLS(d,kernel,threshold):
             P_den = np.c_[np.zeros((m,1)).T, 1]
             P = np.r_[P_num,P_den]
 
-            alpha = np.matrix(alpha - ((a * err[-1])/delta))
+            alpha = np.array(alpha - ((a * err[-1])/delta)).reshape(m,1)
             alpha = np.r_[alpha,[[err[-1]/delta]]]
             m = m + 1
         else:
