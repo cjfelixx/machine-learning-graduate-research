@@ -29,7 +29,6 @@ def KRLS_RFF(u,d,kernel,threshold,D):
         delta = (k - h.T @ a).item()
         err = np.append(err,d_n - h.T @ alpha)
         if delta > threshold:
-            dictionary = np.r_[dictionary, u_n]
 
             K_inv_num = np.c_[delta*K_inv + a @ a.T,-a]
             K_inv_den = np.c_[-a.T, 1]
@@ -50,5 +49,4 @@ def KRLS_RFF(u,d,kernel,threshold,D):
 
             alpha = alpha + K_inv @ q_t * err[-1]
 
-#     print('number of SVs',len(dictionary))
     return err
