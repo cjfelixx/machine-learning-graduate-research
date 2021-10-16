@@ -1,13 +1,14 @@
-# Kernel Recursive Least Squares
+# On-line Kernel Methods
 
-## Topics
+## Algorithms
 
-* Least Squares Support Vector Machines (LS-SVM)
-* Recursive Least Squares (RLS)
 * Kernel Recursive Least Squares (KRLS)
 * Kernel Least Mean Squares (KLMS)
+* Kernel Normalized Least Mean Squares (KNLMS)
+* Random Fourier features
 
 ## Todo
 
-* Implement KRLS
-* Implement KLMS
+* Learning cure visualizations
+* Runtime visualizations
+* Federated learning baseline code

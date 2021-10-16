@@ -1,6 +1,6 @@
 import numpy as np
 
-def KNLMS(u,d,kernel,step_size,reg_coeff,threshold):
+def KLMS(u,d,kernel,step_size,threshold):
     
     err = np.array([])
     
@@ -24,7 +24,7 @@ def KNLMS(u,d,kernel,step_size,reg_coeff,threshold):
 
         h = np.array([kernel(u_n,dictionary[j]) for j in range(len(dictionary))]).T.reshape(m,1)
         err = np.append(err,d_n - h.T @ alpha)
-        alpha = alpha + (step_size/(reg_coeff + (np.linalg.norm(h,ord=2)**2)))*((d_n - h.T @ alpha).item() * h)
+        alpha = alpha + (step_size)*((d_n - h.T @ alpha).item() * h)
 
 
 #     print('number of SVs',len(dictionary))

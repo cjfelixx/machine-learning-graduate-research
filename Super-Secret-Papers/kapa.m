@@ -48,6 +48,7 @@ modict=sqrt(k);
 
 % Initialization of the weigth vector
 alpha=d(1)/k;
+alpha=0;
 
 % Filtering process
 i=1;
@@ -59,6 +60,7 @@ while i<size(v,1)
     kv=kernel(ker,dic,b,p1);
     k=kernel(ker,b,b,p1);
     C=kv./(sqrt(k)*modict);
+    C = kv;
     
     % If v(i) is sufficiently novel, that is, the coherence of 
     % the dictionary remains smaller than the threshold tresh, v(i)
@@ -77,6 +79,7 @@ while i<size(v,1)
     E=D-H*alpha;
     err(i)=E(1);
     alpha=alpha+mu*H'*inv(H*H'+epsilon*eye(length(D)))*E;
+    
 end
 
 tdict;
