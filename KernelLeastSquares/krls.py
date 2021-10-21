@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def KRLS(u,d,kernel,threshold):
+def KRLS(u,d,kernel_params,threshold,beta=1.0):
     '''
        Kernel Recursive Least Sqaures depends on a kernel function in which to evaluate the points in a
        higher dimension without needing to create and analyaze in the higher dimensional plane as this would
@@ -10,7 +10,9 @@ def KRLS(u,d,kernel,threshold):
        easy to evaluate.
        For this demonstration, we will be utilizing the guassian kernel function
     '''
-    err = np.array([])
+    sigma = kernel_params.sigma
+    kernel = lambda u_i,u_j: np.exp(-1 * sigma * (np.linalg.norm(u_i - u_j,ord=2)**2))    
+    err = np.array([])    
 
     # Initalization
     m = 1
@@ -50,9 +52,8 @@ def KRLS(u,d,kernel,threshold):
             m = m + 1
         else:
 
-            q_t = (P @ a)/(1 + a.T @ P @ a)
-            P = P - ((P @ a @ a.T @ P)/(1 + a.T @ P @ a))
-
+            q_t = (P @ a)/(beta + a.T @ P @ a)
+            P = (P - ((P @ a @ a.T @ P)/(beta + a.T @ P @ a)))/beta
             alpha = alpha + K_inv @ q_t * err[-1]
 
 #     print('number of SVs',len(dictionary))

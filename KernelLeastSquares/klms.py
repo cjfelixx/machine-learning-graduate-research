@@ -1,7 +1,9 @@
 import numpy as np
 
-def KLMS(u,d,kernel,step_size,threshold):
+def KLMS(u,d,kernel_params,step_size,threshold):
     
+    sigma = kernel_params.sigma
+    kernel = lambda u_i,u_j: np.exp(-1 * sigma * (np.linalg.norm(u_i - u_j,ord=2)**2))
     err = np.array([])
     
     # Initialization
