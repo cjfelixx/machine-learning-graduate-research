@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def KRLS(u,d,kernel_params,threshold,beta=1.0):
+def KRLS(u,d,kernel_params,threshold,alpha_0=np.matrix(0).reshape(1,1),beta=1.0):
     '''
        Kernel Recursive Least Sqaures depends on a kernel function in which to evaluate the points in a
        higher dimension without needing to create and analyaze in the higher dimensional plane as this would
@@ -24,8 +24,7 @@ def KRLS(u,d,kernel_params,threshold,beta=1.0):
 
     P = np.matrix(1)
 #     alpha = np.array(d[0]/k).reshape(1,1)
-    alpha = np.matrix(0).reshape(1,1)
-    
+    alpha = alpha_0
     err = np.append(err,d[0] - h.T @ alpha)
     for n in range(1, len(d)):
         u_n = u[n].reshape(1,2)

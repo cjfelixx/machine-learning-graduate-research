@@ -1,6 +1,6 @@
 import numpy as np
 
-def KLMS_RFF(u,d,kernel_params,step_size,D):
+def KLMS_RFF(u,d,kernel_params,step_size,D,alpha_0=np.zeros((D,1))):
     
     sigma = 1/np.sqrt(2*kernel_params.sigma)
     
@@ -11,7 +11,7 @@ def KLMS_RFF(u,d,kernel_params,step_size,D):
     # Initialization
     u_0 = u[0].reshape(2,1)
     h = np.sqrt(2/D) * np.cos(W.T @ u_0 + b)
-    alpha = np.zeros((D,1))
+    alpha = alpha_0
     err = np.append(err,d[0] - h.T @ alpha)
     alpha = alpha + step_size * err[-1] * h
     for n in range(1, len(d)):
@@ -20,4 +20,4 @@ def KLMS_RFF(u,d,kernel_params,step_size,D):
         h = np.sqrt(2/D) * np.cos(W.T @ u_n + b)
         err = np.append(err, d_n - h.T @ alpha)
         alpha = alpha + step_size * err[-1] * h
-    return err
+    return err,h,alpha

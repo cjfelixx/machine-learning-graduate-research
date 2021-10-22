@@ -1,6 +1,6 @@
 import numpy as np
 
-def KNLMS(u,d,kernel_params,step_size,reg_coeff,threshold):
+def KNLMS(u,d,kernel_params,step_size,reg_coeff,threshold,alpha_0=np.array(0).reshape(1,1)):
 
     sigma = kernel_params.sigma
     kernel = lambda u_i,u_j: np.exp(-1 * sigma * (np.linalg.norm(u_i - u_j,ord=2)**2))  
@@ -12,7 +12,7 @@ def KNLMS(u,d,kernel_params,step_size,reg_coeff,threshold):
     u_0 = u[0]
     dictionary = np.array(u_0).reshape(1,2)
     h = np.array(kernel(u_0,dictionary)).reshape(1,1)
-    alpha = np.array(0).reshape(1,1)
+    alpha = alpha_0
     
     err = np.append(err,d[0] - h.T @ alpha)
     for n in range(1, len(d)):

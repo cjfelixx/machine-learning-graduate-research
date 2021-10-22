@@ -1,6 +1,6 @@
 import numpy as np
 
-def KRLS_RFF(u,d,kernel_params,D,beta=1.0,l=1.0):
+def KRLS_RFF(u,d,kernel_params,D,alpha_0=np.zeros((D,1)),beta=1.0,l=1.0):
 
     sigma = 1/np.sqrt(2*kernel_params.sigma)
     
@@ -10,7 +10,7 @@ def KRLS_RFF(u,d,kernel_params,D,beta=1.0,l=1.0):
     
     # Initalization
     P = np.eye(D)/l
-    alpha = np.zeros((D,1))
+    alpha = alpha_0
     for n in range(len(d)):
         u_n = u[n].reshape(2,1)
         d_n = d[n]
