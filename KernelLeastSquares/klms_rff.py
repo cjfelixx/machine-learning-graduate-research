@@ -2,7 +2,7 @@ import numpy as np
 
 def KLMS_RFF(u,d,kernel_params,step_size,D):
     
-    sigma = kernel_params.sigma
+    sigma = 1/np.sqrt(2*kernel_params.sigma)
     
     err = np.array([])
     W = np.random.normal(loc=0, scale=sigma, size=(2,D))
