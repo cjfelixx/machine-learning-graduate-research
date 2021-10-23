@@ -1,6 +1,6 @@
 import numpy as np
 
-def KLMS_RFF(u,d,kernel_params,step_size,D,alpha_0=np.zeros((D,1))):
+def KLMS_RFF(u,d,kernel_params,step_size,D,alpha_0):
     
     sigma = 1/np.sqrt(2*kernel_params.sigma)
     
