@@ -10,6 +10,7 @@ def KRLS(u,d,kernel_params,threshold,alpha_0=np.matrix(0).reshape(1,1),beta=1.0)
        easy to evaluate.
        For this demonstration, we will be utilizing the guassian kernel function
     '''
+
     sigma = kernel_params.sigma
     kernel = lambda u_i,u_j: np.exp(-1 * sigma * (np.linalg.norm(u_i - u_j,ord=2)**2))    
     err = np.array([])    
@@ -56,4 +57,4 @@ def KRLS(u,d,kernel_params,threshold,alpha_0=np.matrix(0).reshape(1,1),beta=1.0)
             alpha = alpha + K_inv @ q_t * err[-1]
 
 #     print('number of SVs',len(dictionary))
-    return err
+    return err,h,alpha

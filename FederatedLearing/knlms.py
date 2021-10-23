@@ -31,4 +31,4 @@ def KNLMS(u,d,kernel_params,step_size,reg_coeff,threshold,alpha_0=np.array(0).re
 
 
 #     print('number of SVs',len(dictionary))
-    return err
+    return err,h,alpha

@@ -21,4 +21,4 @@ def KRLS_RFF(u,d,kernel_params,D,alpha_0,beta=1.0,l=1.0):
 #         print(k.shape)
         P = (P - (k @ h.T @ P))/beta
         alpha = alpha + k * err[-1]
-    return err
+    return err,h,alpha

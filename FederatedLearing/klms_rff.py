@@ -19,5 +19,5 @@ def KLMS_RFF(u,d,kernel_params,step_size,D,alpha_0):
         d_n = d[n]
         h = np.sqrt(2/D) * np.cos(W.T @ u_n + b)
         err = np.append(err, d_n - h.T @ alpha)
-        alpha = alpha + step_size * err[-1] * h
+        alpha = alpha + step_size * err[-1] * h 
     return err,h,alpha

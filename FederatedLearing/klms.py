@@ -30,4 +30,4 @@ def KLMS(u,d,kernel_params,step_size,threshold,alpha_0=np.array(0).reshape(1,1))
 
 
 #     print('number of SVs',len(dictionary))
-    return err
+    return err,h,alpha
