@@ -5,7 +5,7 @@ def KRLS_RFF(u,d,kernel_params,D,alpha_0,beta=1.0,l=1.0):
     sigma = 1/np.sqrt(2*kernel_params.sigma)
     
     err = np.array([])
-    W = np.random.normal(loc=0, scale=sigma, size=(2,D))
+    W = (1/sigma) * np.random.normal(loc=0, scale=sigma, size=(2,D))
     b = np.random.uniform(0,2*np.pi,D).reshape(D,1)
     
     # Initalization
