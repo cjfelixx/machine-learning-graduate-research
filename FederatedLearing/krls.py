@@ -1,40 +1,26 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def KRLS(u,d,kernel_params,threshold,alpha_0=np.matrix(0).reshape(1,1),beta=1.0):
-    '''
-       Kernel Recursive Least Sqaures depends on a kernel function in which to evaluate the points in a
-       higher dimension without needing to create and analyaze in the higher dimensional plane as this would
-       create significant computing cost.
-       The use of kernel functions are valuable as they transform the data into another plane in which they become.
-       easy to evaluate.
-       For this demonstration, we will be utilizing the guassian kernel function
-    '''
+def KRLS(u,d,kernel,threshold,alpha_0=np.matrix(0).reshape(1,1),beta=1.0):
 
-    sigma = kernel_params.sigma
-    kernel = lambda u_i,u_j: np.exp(-1 * sigma * (np.linalg.norm(u_i - u_j,ord=2)**2))    
-    err = np.array([])    
-
-    # Initalization
+    err = []
     m = 1
-    u_0 = u[0]
-    dictionary = np.array(u_0).reshape(1,2)
-    h = np.array(kernel(u_0,dictionary)).reshape(1,1)
-    k = kernel(u_0,u_0)
+    dictionary = u[0].reshape(1,2)
+    h = kernel.fun(u[0],dictionary).reshape(1,1)
+    k = kernel.fun(u[0],u[0])
     K_inv = np.matrix(1/k)
 
     P = np.matrix(1)
 #     alpha = np.array(d[0]/k).reshape(1,1)
     alpha = alpha_0
-    err = np.append(err,d[0] - h.T @ alpha)
+    err.append((d[0] - h.T @ alpha).item())
     for n in range(1, len(d)):
         u_n = u[n].reshape(1,2)
-        d_n = d[n]
-        k = kernel(u_n,u_n)
-        h = np.array([kernel(u_n,dictionary[j]) for j in range(len(dictionary))]).T.reshape(m,1)
+        k = kernel.fun(u_n,u_n)
+        h = np.array([kernel.fun(u_n,dictionary[j]) for j in range(len(dictionary))]).T.reshape(m,1)
         a = K_inv @ h
         delta = (k - h.T @ a).item()
-        err = np.append(err,d_n - h.T @ alpha)
+        err.append((d[n] - h.T @ alpha).item())
         if delta > threshold:
             dictionary = np.r_[dictionary, u_n]
 
@@ -51,9 +37,10 @@ def KRLS(u,d,kernel_params,threshold,alpha_0=np.matrix(0).reshape(1,1),beta=1.0)
             alpha = np.r_[alpha,[[err[-1]/delta]]]
             m = m + 1
         else:
-
-            q_t = (P @ a)/(beta + a.T @ P @ a)
-            P = (P - ((P @ a @ a.T @ P)/(beta + a.T @ P @ a)))/beta
+            P_a = P @ a
+            a_P_a = a.T @ P_a
+            q_t = (P_a)/(beta + a_P_a)
+            P = (P - ((P_a @ a.T @ P)/(beta + a_P_a)))/beta
             alpha = alpha + K_inv @ q_t * err[-1]
 
 #     print('number of SVs',len(dictionary))
