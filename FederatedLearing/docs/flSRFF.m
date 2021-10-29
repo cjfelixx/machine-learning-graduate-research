@@ -1,6 +1,6 @@
 %Simulation of synchronous Federated Learning
 tic
-total = 100; %number of repetitions of simulation
+total = 1; %number of repetitions of simulation
 iter = 10000;
 amse = zeros(iter,1);
 for epoch = 1:total
@@ -50,6 +50,7 @@ end
 amse = amse + mse(1:iter,1)/total;
 end
 toc
+semilogy(mse)
 
 
 
