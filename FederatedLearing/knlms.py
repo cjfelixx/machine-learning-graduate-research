@@ -5,8 +5,6 @@ def KNLMS(u,d,kernel,step_size,reg_coeff,threshold,alpha_0=np.array(0).reshape(1
 
 
     err = []
-    
-    # Initialization
     m = 1
 
     dictionary = u[0].reshape(1,2)
@@ -17,7 +15,7 @@ def KNLMS(u,d,kernel,step_size,reg_coeff,threshold,alpha_0=np.array(0).reshape(1
     for n in range(1, len(d)):
         u_n = u[n].reshape(1,2)
 
-        if np.max(np.abs([kernel.fun(u_n,dictionary[j]) for j in range(len(dictionary))])) < threshold:
+        if np.max(np.abs([kernel.fun(u_n,dictionary[j]) for j in range(len(dictionary))])) <= threshold:
             m += 1
             dictionary = np.r_[dictionary, u_n]
             alpha = np.r_[alpha,[[0]]]

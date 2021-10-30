@@ -15,7 +15,7 @@ def KLMS(u,d,kernel,step_size,threshold,alpha_0=np.array(0).reshape(1,1)):
         u_n = u[n].reshape(1,2)
         d_n = d[n]
 
-        if np.max(np.abs([kernel.fun(u_n,dictionary[j]) for j in range(len(dictionary))])) < threshold:
+        if np.max(np.abs([kernel.fun(u_n,dictionary[j]) for j in range(len(dictionary))])) <= threshold:
             m += 1
             dictionary = np.r_[dictionary, u_n]
             alpha = np.r_[alpha,[[0]]]

@@ -17,7 +17,7 @@ D = transpose(dn(3:3000)); %output data
 el= 10; %number of edge processors
 dcount = zeros(1,el);
 agg = 500; %number iterations when cloud contacts edge processors
-mu = .8;
+mu = .09;
 samples = 100; %number of random fourier features
 sigma = sqrt(1/(3.73*2)); %Gaussian widths
 w = 1/sigma * randn(2,samples); %random fourier weight vector
@@ -35,8 +35,8 @@ v = ceil(rand(1,1)*2998); %randomly pick data
 edge = ceil(rand(1,1)*el); %randomly pick  edge processor  where data goes to
 dcount(edge)=dcount(edge)+1; %update number of updates for edge processor
 x = X(:,v);
-error = D(v) -  Z(v,:)*transpose(hfl(edge,:)); %compute error
-hfl(edge,:) = hfl(edge,:) + mu *Z(v,:)*error; % update edge learner using LMS
+error(jj) = D(v) -  Z(v,:)*transpose(hfl(edge,:)); %compute error
+hfl(edge,:) = hfl(edge,:) + mu *Z(v,:)*error(jj); % update edge learner using LMS
 
 if mod(jj,agg) ==0 %test to see if central processor should communicate with all edge processors
 
@@ -50,9 +50,10 @@ end
 amse = amse + mse(1:iter,1)/total;
 end
 toc
-semilogy(mse)
+% semilogy(mse)
 
-
+% plot(error);
+hist(w(1,:))
 
 
 

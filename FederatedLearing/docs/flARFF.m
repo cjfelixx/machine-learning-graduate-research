@@ -1,14 +1,15 @@
 %Simulation of asynchronous Federated Learning
 tic
-total = 100; %number of repetitions of simulation
+total = 1; %number of repetitions of simulation
 iter = 10000;
 amse = zeros(iter,1);
 for epoch = 1:total
 dn =zeros(1,3000); %nonlinear time series
-dn(1) = .1;
-dn(2) = .1;
+dn(1) = .1 + 0.1*randn(1,1);
+dn(2) = .1 + 0.1*randn(1,1);
 for ii = 3:3000
 dn(ii) = (0.8-0.5*exp(-dn(ii-1)^2))*dn(ii-1) - (0.3+0.9*exp(-dn(ii-1)^2))*dn(ii-2) + .1*sin(dn(ii-1)*pi)+0.1*randn(1,1); %random Gaussian noise with std = 0.1
+
 end
 X = [dn(1:2998);dn(2:2999)]; %input data
 D = transpose(dn(3:3000)); %output data
@@ -56,7 +57,7 @@ amse = amse + mse(1:iter,1)/total;
 end
 toc
 
-
+semilogy(mse);
 
 
 

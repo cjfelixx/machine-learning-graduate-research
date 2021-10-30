@@ -37,3 +37,5 @@ end
 amse = amse + mse(1:iter,1)/total;
 end
 toc
+
+semilogy(mse)
