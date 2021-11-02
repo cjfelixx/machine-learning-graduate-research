@@ -1,23 +1,17 @@
 import numpy as np
 
-class KLMS_RFF:
+class krls_rff:
     
-    def __init__(self,d,h,D,alpha_0,beta=1.0,l=1.0):
-        self.d = d
-        self.h = h
+    def __init__(self,D,beta=1.0,l=1.0):
         self.D = D
-        self.alpha_0 = alpha_0
         self.beta = beta
         self.l = l
      
-    def train(self):
-        d = self.d
-        alpha = self.alpha_0
-        h = self.h
+    def train(self,h,d,alpha_0):
         D = self.D
         beta = self.beta
         l = self.l
-
+        alpha = alpha_0
         err = []
         P = np.eye(D)/l
         alpha = alpha_0
