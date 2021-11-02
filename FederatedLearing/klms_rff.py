@@ -1,6 +1,6 @@
 import numpy as np
 
-def KLMS_RFF(u,d,h,step_size,D,alpha_0):
+def KLMS_RFF(d,h,step_size,D,alpha_0):
     
     err = []
     # Initialization
