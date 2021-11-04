@@ -17,7 +17,7 @@ D = transpose(dn(3:3000)); %output data
 el= 10; %number of edge processors
 dcount = zeros(1,el);
 agg = 500; %number iterations when cloud contacts edge processors
-mu = .09;
+mu = .8;
 samples = 100; %number of random fourier features
 sigma = sqrt(1/(3.73*2)); %Gaussian widths
 w = 1/sigma * randn(2,samples); %random fourier weight vector
@@ -50,10 +50,11 @@ end
 amse = amse + mse(1:iter,1)/total;
 end
 toc
-% semilogy(mse)
+figure(1)
+semilogy(mse)
 
 % plot(error);
-hist(w(1,:))
+% hist(w(1,:))
 
 
 

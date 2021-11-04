@@ -1,26 +1,32 @@
 import numpy as np
 
-def fl_sync(iteration,K,h,u,d):
+def fl_sync(iteration,K,kernel,h,u,d,l):
+    D = len(h)
+    c =  np.ones(K).reshape(K,1)/K    
+    mse = np.zeros(iteration)
+    alpha = np.zeros((D,1))  
+    alphas = np.zeros((K,D))
     
-    mse_cent = [np.var(d)]
-    sigma = 1/np.sqrt(2*kernel.sigma)
-    W = (1/sigma) * np.random.normal(size=(2,D))
+    mse[0] = np.var(d)
 
-    b = np.random.uniform(0,np.pi,(D,1))
-    h = np.sqrt(2/D) * np.cos(W.T @ u.T + b)
-    for n in tqdm(range(iteration)):
+    for n in range(iteration):
 
         # Local updates
-        v = np.random.randint(0,num_data)
-        alpha_in = alpha
+        v = np.random.randint(0,len(d))
+        edge = np.random.randint(0,K)
+        alpha_in = alphas[edge].reshape((D,1))
         u_k = u[v]
         h_k = h[:,v].reshape((D,1))
         d_k = np.array([d[v]])
-    #     err = d_k - h_k.T @ alpha_in
-    #     alpha_step = alpha_in + step_size  * h_k * err
-        erri,alpha_step = KLMS_RFF(u_k,d_k,h_k,step_size,D,alpha_0=alpha_in)
+        _,alpha_step = kernel.train(h_k,d_k,alpha_in)
 
-        alpha = alpha_step
-        mse_cent.append(np.square(np.linalg.norm(d[-500::].reshape(500,1) - h.T[-500::] @ alpha))/500)
+        alphas[edge] = alpha_step.T
 
-return mse_cent
+        if n % l == 0 and n>0:
+            alpha = (alphas.T @ c)
+            alphas = np.repeat(alpha,K,axis=1).T
+            mse[n] = np.square(np.linalg.norm(d[-500::].reshape(500,1) - h.T[-500::] @ alpha))/500
+        elif n > 0:
+
+            mse[n] = mse[n-1]        
+    return mse
