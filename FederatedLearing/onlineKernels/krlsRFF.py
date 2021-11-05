@@ -20,7 +20,7 @@ class krls_rff:
             err.append((d[n] - h_n.T @ alpha).item())  
             a = h_n.T @ P
             k = (P @ h_n)/(beta + a @ h_n)
-            P = (P - (k @ a))/beta
+            P = P/beta - (k @ a)/beta
             alpha = alpha + k * err[-1]
             
         return err,alpha
