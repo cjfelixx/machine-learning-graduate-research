@@ -6,6 +6,7 @@ class knlms_rff:
         self.step_size = step_size
         self.reg_coeff = reg_coeff
         self.D = D
+        self.P = np.zeros((D,D))
      
     def train(self,h,d,alpha_0):
         step_size = self.step_size

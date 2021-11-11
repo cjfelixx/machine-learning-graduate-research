@@ -6,14 +6,18 @@ class krls_rff:
         self.D = D
         self.beta = beta
         self.l = l
+        self.P = np.eye(D)/l
+#         print(self.P)
      
-    def train(self,h,d,alpha_0):
+    def train(self,h,d,alpha_0,P=None):
         D = self.D
         beta = self.beta
         l = self.l
         alpha = alpha_0
         err = []
-        P = np.eye(D)/l
+        if (P.any()):
+            P = self.P
+        
         alpha = alpha_0
         for n in range(len(d)):
             h_n = h.T[n].reshape((D,1))
@@ -21,6 +25,6 @@ class krls_rff:
             a = h_n.T @ P
             k = (P @ h_n)/(beta + a @ h_n)
             P = P/beta - (k @ a)/beta
-            alpha = alpha + k * err[-1]
+            alpha += k * err[-1]
             
-        return err,alpha
+        return err,alpha,P
