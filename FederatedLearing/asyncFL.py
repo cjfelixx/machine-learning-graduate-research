@@ -20,7 +20,7 @@ class fl_async:
         P = [kernel.P for i in range(K)]        
         mse[0] = np.var(d)
         edge_count = [ 0 for i in range(K)]
-        for n in range(iteration):
+        for n in range(1,iteration):
 
             # Local updates
             v = np.random.randint(len(d))

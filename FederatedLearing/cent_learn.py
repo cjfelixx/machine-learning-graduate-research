@@ -6,7 +6,7 @@ def cent_learn(iteration,K,kernel,h,u,d):
     alpha = np.zeros((D,1))  
     mse[0] = np.var(d)
     P = kernel.P
-    for n in range(iteration):
+    for n in range(1,iteration):
 
         v = np.random.randint(len(d))
         alpha_in = alpha

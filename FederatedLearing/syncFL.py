@@ -18,8 +18,7 @@ class fl_sync:
         alphas = np.zeros((K,D))
         P = [kernel.P for i in range(K)]
         mse[0] = np.var(d)
-
-        for n in range(iteration):
+        for n in range(1,iteration):
             # Local updates
             v = np.random.randint(len(d))
             edge = np.random.randint(K)
@@ -42,5 +41,5 @@ class fl_sync:
                 mse[n] = np.square(np.linalg.norm(d[-500::].reshape(500,1) - h.T[-500::] @ alpha))/500
             elif n > 0:
 
-                mse[n] = mse[n-1]    
+                mse[n] = mse[n-1]
         return mse
