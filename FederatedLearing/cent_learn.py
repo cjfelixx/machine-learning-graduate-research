@@ -8,7 +8,7 @@ def cent_learn(iteration,K,kernel,h,u,d):
     P = kernel.P
     for n in range(iteration):
 
-        v = np.random.randint(0,len(d))
+        v = np.random.randint(len(d))
         alpha_in = alpha
         u_k = u[v]
         h_k = h[:,v].reshape((D,1))

@@ -4,7 +4,7 @@ class klms_rff:
     
     def __init__(self,step_size,D):
         self.step_size = step_size
-        self.D = D
+        self.D = int(D)
         self.P = np.zeros((D,D))        
      
     def train(self,h,d,alpha_0):
