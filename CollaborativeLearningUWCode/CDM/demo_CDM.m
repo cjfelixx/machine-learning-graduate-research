@@ -15,7 +15,6 @@ end
 xlabel('Time','LineWidth',2,'FontSize',14);
 ylabel('Response','LineWidth',2,'FontSize',14);
 
-    
 
 %%%-----------------------Experement on Dense Sample------------------%%%%
 %%------------Modeling learning-----------------%%
@@ -23,7 +22,7 @@ ylabel('Response','LineWidth',2,'FontSize',14);
 
 clear BIGM dYIGM
 for i=1:N
-[BIGM(:,i),bint{i},dYIGM{i}]=regress(trainY{i}',[ones(1,size(trainX{i},2));trainX{i}]');
+    [BIGM(:,i),bint{i},dYIGM{i}]=regress(trainY{i}',[ones(1,size(trainX{i},2));trainX{i}]');
 end
 % for i=1:N
 % rmse_train(i,1)=sqrt(dYIGM{i}'*dYIGM{i}/length(dYIGM{i}));
@@ -106,10 +105,10 @@ sdB(4)=sum(sum(dBNCDM))/N;
 vdB(4)=sqrt(sum(diag(dBNCDM'*dBNCDM))/(N*11));
 
 for i=1:N
-for j=i:N
-Ak(i,j)=exp(-(Z(i,:)-Z(j,:))*(Z(i,:)-Z(j,:))'/optm);
-Ak(j,i)=Ak(i,j);
-end
+    for j=i:N
+        Ak(i,j)=exp(-(Z(i,:)-Z(j,:))*(Z(i,:)-Z(j,:))'/optm);
+        Ak(j,i)=Ak(i,j);
+    end
 end
 [objNCDM,lseNCDM,dYNCDM]=CalculateObj(trainY', B0_NCDMk, trainX', B_NCDM, W_NCDM,lambda*Ak);%goodness of fit
 rmse_train(:,4)=sqrt(diag(dYNCDM*dYNCDM')/n);
@@ -124,27 +123,27 @@ RMSE_train=mean(rmse_train);
 figure;
 boxplot(rmse_train,'labels',{'IGM','CDM','MEM','NCDM'});
 for i=1:N
-setot(i,1)=(trainY{i}-mean(trainY{i}))*(trainY{i}-mean(trainY{i}))';
-R2(i,1)=1-dYIGM(i,:)*dYIGM(i,:)'/setot(i,1);
-R2(i,2)=1-dYCDM(i,:)*dYCDM(i,:)'/setot(i,1);
-R2(i,3)=1-dYMEM(i,:)*dYMEM(i,:)'/setot(i,1);
-R2(i,4)=1-dYNCDM(i,:)*dYNCDM(i,:)'/setot(i,1);
+    setot(i,1)=(trainY{i}-mean(trainY{i}))*(trainY{i}-mean(trainY{i}))';
+    R2(i,1)=1-dYIGM(i,:)*dYIGM(i,:)'/setot(i,1);
+    R2(i,2)=1-dYCDM(i,:)*dYCDM(i,:)'/setot(i,1);
+    R2(i,3)=1-dYMEM(i,:)*dYMEM(i,:)'/setot(i,1);
+    R2(i,4)=1-dYNCDM(i,:)*dYNCDM(i,:)'/setot(i,1);
 end
 R=mean(R2);
 
 %%------------------------Prediciton------------------%%
 nt=5;
 for i=1:N
-yIGM(i,:)=BIGM(:,i)'*testX{i};
-yCDM(i,:)=BCDM(:,i)'*testX{i};
-yMEM(i,:)=BMEM(:,i)'*testX{i};
-yNCDM(i,:)=BNCDM(:,i)'*testX{i};
+    yIGM(i,:)=BIGM(:,i)'*testX{i};
+    yCDM(i,:)=BCDM(:,i)'*testX{i};
+    yMEM(i,:)=BMEM(:,i)'*testX{i};
+    yNCDM(i,:)=BNCDM(:,i)'*testX{i};
 end
 for i=1:N
-rIGM(i,:)=BIGM(:,i)'*testX{i}-testY{i};
-rCDM(i,:)=BCDM(:,i)'*testX{i}-testY{i};
-rMEM(i,:)=BMEM(:,i)'*testX{i}-testY{i};
-rNCDM(i,:)=BNCDM(:,i)'*testX{i}-testY{i};
+    rIGM(i,:)=BIGM(:,i)'*testX{i}-testY{i};
+    rCDM(i,:)=BCDM(:,i)'*testX{i}-testY{i};
+    rMEM(i,:)=BMEM(:,i)'*testX{i}-testY{i};
+    rNCDM(i,:)=BNCDM(:,i)'*testX{i}-testY{i};
 end
 clear rmse_test
 rmse_test(:,1)=sqrt(diag(rIGM*rIGM')/nt);
@@ -156,10 +155,10 @@ boxplot(rmse_test,'labels',{'IGM','CDM','MEM','NCDM'});
 
 clear RMSE_test
 for i=1:5
-RMSE_test(i,1)=sqrt(mean(rIGM(:,i).^2))';
-RMSE_test(i,2)=sqrt(mean(rCDM(:,i).^2))';
-RMSE_test(i,3)=sqrt(mean(rMEM(:,i).^2))';
-RMSE_test(i,4)=sqrt(mean(rNCDM(:,i).^2))';
+    RMSE_test(i,1)=sqrt(mean(rIGM(:,i).^2))';
+    RMSE_test(i,2)=sqrt(mean(rCDM(:,i).^2))';
+    RMSE_test(i,3)=sqrt(mean(rMEM(:,i).^2))';
+    RMSE_test(i,4)=sqrt(mean(rNCDM(:,i).^2))';
 end
 RMSE_test=RMSE_test/N;
 for i=1:5
@@ -171,10 +170,10 @@ end
 nMSE_test=sum(nMSE_test)/(5*N);
 wR=zeros(1,4);
 for i=1:5
-wR(1)=corr(Y(:,20+i),yIGM(:,i))*N+wR(1);
-wR(2)=corr(Y(:,20+i),yCDM(:,i))*N+wR(2);
-wR(3)=corr(Y(:,20+i),yMEM(:,i))*N+wR(3);
-wR(4)=corr(Y(:,20+i),yNCDM(:,i))*N+wR(4);
+    wR(1)=corr(Y(:,20+i),yIGM(:,i))*N+wR(1);
+    wR(2)=corr(Y(:,20+i),yCDM(:,i))*N+wR(2);
+    wR(3)=corr(Y(:,20+i),yMEM(:,i))*N+wR(3);
+    wR(4)=corr(Y(:,20+i),yNCDM(:,i))*N+wR(4);
 end
 wR=wR./(5*N);
 
@@ -188,7 +187,7 @@ end
 %%--------------------model learning----------------%%
 %%IGM
 for i=1:N
-[BIGMs(:,i),bints{i},dYIGMs{i}]=regress(trainYs{i}',[ones(1,size(trainXs{i},2));trainXs{i}]');
+    [BIGMs(:,i),bints{i},dYIGMs{i}]=regress(trainYs{i}',[ones(1,size(trainXs{i},2));trainXs{i}]');
 end
 %bias
 dBIGMs=B0-BIGMs;
@@ -216,10 +215,10 @@ vdBs(3)=sqrt(sum(diag(dBMEMs*dBMEMs'))/(N*11));
 Z=W';
 optm=1.1;
 for i=1:N
-for j=i:N
-Ak(i,j)=exp(-(Z(i,:)-Z(j,:))*(Z(i,:)-Z(j,:))'/optm);
-Ak(j,i)=Ak(i,j);
-end
+    for j=i:N
+        Ak(i,j)=exp(-(Z(i,:)-Z(j,:))*(Z(i,:)-Z(j,:))'/optm);
+        Ak(j,i)=Ak(i,j);
+    end
 end
 [B_NCDMs, W_NCDMs,nIter_NCDMs, objhistory_NCDMs, objNCDMs, lambdas, optms, pathobjs]= chooseA(trainYs,trainXs,W',K_finals,min(o_MEMs),1,1,20,1);
 [B_NCDMs2, W_NCDMs2,nIter_NCDMs2, objhistory_NCDMs2, objNCDMs2, lambdas2, optms2, pathobjs2]= chooseA(trainYs,trainXs,W',K_finals,min(o_MEMs),1,1,20,3,optms);
@@ -236,7 +235,7 @@ Aks=(Aks+Aks')/2;
 
     Aks=zeros(N);
     for i=1:N
-    Aks(i,id(i,:))=1;
+        Aks(i,id(i,:))=1;
     end
     
 options.alpha=lambdas2;
@@ -247,16 +246,16 @@ sdBs(4)=sum(sum(dBNCDMs))/N;
 vdBs(4)=sqrt(sum(diag(dBNCDMs*dBNCDMs'))/(N*11));
 nt=5;
 for i=1:N
-yIGMs(i,:)=BIGMs(:,i)'*testX{i};
-yCDMs(i,:)=BCDMs(:,i)'*testX{i};
-yMEMs(i,:)=BMEMs(:,i)'*testX{i};
-yNCDMs(i,:)=BNCDMs(:,i)'*testX{i};
+    yIGMs(i,:)=BIGMs(:,i)'*testX{i};
+    yCDMs(i,:)=BCDMs(:,i)'*testX{i};
+    yMEMs(i,:)=BMEMs(:,i)'*testX{i};
+    yNCDMs(i,:)=BNCDMs(:,i)'*testX{i};
 end
 for i=1:N
-rIGMs(i,:)=BIGMs(:,i)'*testX{i}-testY{i};
-rCDMs(i,:)=BCDMs(:,i)'*testX{i}-testY{i};
-rMEMs(i,:)=BMEMs(:,i)'*testX{i}-testY{i};
-rNCDMs(i,:)=BNCDMs(:,i)'*testX{i}-testY{i};
+    rIGMs(i,:)=BIGMs(:,i)'*testX{i}-testY{i};
+    rCDMs(i,:)=BCDMs(:,i)'*testX{i}-testY{i};
+    rMEMs(i,:)=BMEMs(:,i)'*testX{i}-testY{i};
+    rNCDMs(i,:)=BNCDMs(:,i)'*testX{i}-testY{i};
 end
 rmse_tests(:,1)=sqrt(diag(rIGMs*rIGMs')/nt);
 rmse_tests(:,2)=sqrt(diag(rCDMs*rCDMs')/nt);
@@ -269,10 +268,10 @@ boxplot(rmse_tests,'labels',{'IGM','CDM','MEM','NCDM'});
 %%%----------------------Prediction-------------------%%%
 clear RMSE_tests
 for i=1:5
-RMSE_tests(i,1)=sqrt(mean(rIGMs(:,i).^2))';
-RMSE_tests(i,2)=sqrt(mean(rCDMs(:,i).^2))';
-RMSE_tests(i,3)=sqrt(mean(rMEMs(:,i).^2))';
-RMSE_tests(i,4)=sqrt(mean(rNCDMs(:,i).^2))';
+    RMSE_tests(i,1)=sqrt(mean(rIGMs(:,i).^2))';
+    RMSE_tests(i,2)=sqrt(mean(rCDMs(:,i).^2))';
+    RMSE_tests(i,3)=sqrt(mean(rMEMs(:,i).^2))';
+    RMSE_tests(i,4)=sqrt(mean(rNCDMs(:,i).^2))';
 end
 RMSE_test=RMSE_test/N;
 for i=1:5
@@ -284,9 +283,9 @@ end
 nMSE_tests=sum(nMSE_tests)/(5*N);
 wRs=zeros(1,4);
 for i=1:5
-wRs(1)=corr(Y(:,20+i),yIGMs(:,i))*N+wRs(1);
-wRs(2)=corr(Y(:,20+i),yCDMs(:,i))*N+wRs(2);
-wRs(3)=corr(Y(:,20+i),yMEMs(:,i))*N+wRs(3);
-wRs(4)=corr(Y(:,20+i),yNCDMs(:,i))*N+wRs(4);
+    wRs(1)=corr(Y(:,20+i),yIGMs(:,i))*N+wRs(1);
+    wRs(2)=corr(Y(:,20+i),yCDMs(:,i))*N+wRs(2);
+    wRs(3)=corr(Y(:,20+i),yMEMs(:,i))*N+wRs(3);
+    wRs(4)=corr(Y(:,20+i),yNCDMs(:,i))*N+wRs(4);
 end
 wRs=wRs./(5*N);
