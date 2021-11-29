@@ -35,7 +35,7 @@ class fl_sync:
                 
             alphas[edge] = alpha_step.T
 
-            if n % l == 0 and n>0:
+            if n % l == 0 and n > 0:
                 alpha = (alphas.T @ c)
                 alphas = np.repeat(alpha,K,axis=1).T
                 mse[n] = np.square(np.linalg.norm(d[-500::].reshape(500,1) - h.T[-500::] @ alpha))/500

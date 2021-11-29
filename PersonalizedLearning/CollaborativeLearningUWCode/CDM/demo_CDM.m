@@ -1,7 +1,6 @@
 clc
 clear all
-addpath('/yourpath/GNMF')
-load('/yourpath/simulateddata_1.mat');
+load('simulateddata_1.mat');
 %import simulated data using model 1.
 %B,W are the coefficients in model 1
 [p,N]=size(W);
@@ -51,7 +50,7 @@ w_i(3,class==3)=1;
 %find the optimal number of clusters
 [AIC, K_final, B0_CDM, B_CDM, W_CDM, nIter_CDM, objhistory_CDM] = selectK( trainY', trainX',options, 1, 10);
 
-[B_CDM, W_CDM, nIter_CDM, objhistory_CDM] = CDM (trainY', trainX', K_final, [],options,[],[]);
+[B_CDM, W_CDM, nIter_CDM, objhistory_CDM] = CDM(trainY', trainX', K_final, [],options,[],[]);
 
 %goodness of fit
 BCDM=B_CDM*W_CDM;
@@ -196,7 +195,7 @@ vdBs(1)=sqrt(sum(diag(dBIGMs*dBIGMs'))/(N*11));
 %CDM
 options.alpha = 0;
 [AICs, K_finals, B0_CDMs, B_CDMs, W_CDMs, nIter_CDMs, objhistory_CDMs] = selectK( trainYs', trainXs',options, 1, 10);
-[B_CDMs, W_CDMs, nIter_CDMs, objhistory_CDMs] = CDM (trainYs', trainXs', K, [],options,[],[]);
+[B_CDMs, W_CDMs, nIter_CDMs, objhistory_CDMs] = CDM(trainYs', trainXs', K, [],options,[],[]);
 %goodness of fit
 BCDMs=B_CDMs*W_CDMs;
 dBCDMs=B0-BCDMs;
@@ -239,7 +238,7 @@ Aks=(Aks+Aks')/2;
     end
     
 options.alpha=lambdas2;
-[B_NCDMs, W_NCDMs, nIter_NCDMs,objhistory_NCDMs]= CDM(trainYs', trainXs',K_finals, Aks,options,[],[]);
+[B_NCDMs, W_NCDMs, nIter_NCDMs, objhistory_NCDMs]= CDM(trainYs', trainXs',K_finals, Aks,options,[],[]);
 BNCDMs=B_NCDMs*W_NCDMs;
 dBNCDMs=B0-BNCDMs;
 sdBs(4)=sum(sum(dBNCDMs))/N;
