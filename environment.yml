@@ -1,5 +1,6 @@
 name: scel
 channels:
+  - conda-forge
   - defaults
 dependencies:
   - numpy
@@ -8,3 +9,4 @@ dependencies:
   - pandas
   - jupyterlab
   - tqdm
+  - cvxpy
