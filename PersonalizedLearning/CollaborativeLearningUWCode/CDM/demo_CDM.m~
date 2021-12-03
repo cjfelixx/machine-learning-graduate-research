@@ -50,7 +50,7 @@ alphmax=1;
 %find the optimal number of clusters
 % [AIC, K_final, B_CDM, W_CDM, nIter_CDM, objhistory_CDM] = selectK( trainY', trainX',options, 1, 10);
 
-[B_CDM, W_CDM, nIter_CDM, objhistory_CDM] = CDM(trainY', trainX', 4, [],options,[],[]);
+[B_CDM, W_CDM, nIter_CDM, objhistory_CDM] = CDM(trainY', trainX', 3, [],options,[],[]);
 
 %goodness of fit
 BCDM=B_CDM*W_CDM;
