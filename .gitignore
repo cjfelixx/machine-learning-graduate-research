@@ -1,5 +1,9 @@
 .DS_Store
 Super-Secret-Papers/
+results/
+SPRING 2021/
+Spring_2022/
+machine-learning.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
